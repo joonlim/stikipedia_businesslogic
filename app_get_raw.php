@@ -6,8 +6,8 @@
 	include ("rpc_client.php");
 	include ("rpc_server.php");
 	
-	$file_front = "broker_front.txt";
-	$file_back = "broker_back.txt";
+	$file_front = "broker.txt";
+	$file_back = "broker2.txt";
 
 	$front_queue_get = "front_get_raw"; // routing key
 	$back_queue_get = "back_get";  // binding key
