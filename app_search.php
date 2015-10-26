@@ -22,7 +22,7 @@
 		$refined_title = RegExUtilities::replace_underscores($title);
 
         // Uppercase first letter of every word in the title.
-        $refined_title = ucwords($refined_title);
+        $refined_title = ucwords(strtolower($refined_title));
 
 		return $refined_title;
 	}
