@@ -59,7 +59,10 @@
 		foreach($article_array as $article){
 
 			echo "\n";
+
 			$url_title = RegExUtilities::replace_spaces($article);
+			$url_title = refine_title($url_title);
+
 			$content .= "\n";
 			$content .= '<li><a href= "'.$url_title.'" >'.$url_title.'</a></li>';
 		

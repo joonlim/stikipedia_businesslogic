@@ -12,7 +12,6 @@
 	$front_queue_get = "front_modify"; // routing key
 	$back_queue_get = "back_modify";  // binding key
 
-	$raw_get = "back_get";
 	/**
 	 * Replace underscores with spaces and uppercase the first letter of every
 	 * word.
@@ -41,6 +40,8 @@
 		$func = function($str) {
             global $front_queue_get, $back_queue_get;
 
+            // Receive and forward status
+
 			echo " [x] Received from server '$back_queue_get' : $str\n";
 
 			echo " [x] Forwarded to client '$front_queue_get' : $str\n";	// no formatting done
@@ -53,41 +54,30 @@
 
 		// msg will be in the form { "title" : "Title", "body" : "New body..." }
 		$data = json_decode($msg, true);
+
+		$body = $data['body'];
+
+		if (trim($body) == "")
+			return '{"status" : "FAILED", "reason" : "An article\'s body cannot be empty."}';
+
 		$title = $data['title'];
-
-		echo " [x] Forwarded to server in '$raw_get' : $title\n";
-
-		// Check if this title has a body
-		$rpcClient = new RpcClient($file_back);
-		$exist_status = intval($rpcClient->call($raw_get, $msg, ""));
-
-		echo " [x] Received from server in '$raw_get' : $exist_status\n";
-
-		/*
-		 * $exist_status can be 0, 1, or 2
-		 *
-		 * 0: no article with this title exists
-		 * 1: article with this title exists and it has a body
-		 * 2: article with this title exists but it does not have a body
-		 */
-
-		if ($exist_status === 0) {
-			// no article with this title exists, we must CREATE a new record
-
-		}
-		else if ($exist_status == 1) {
-			// article with this title exists and it has a body, we must UPDATE
-		}
-		else { 
-			// article with this title exists but it does not have a body,
-			// CREATE
-		}
+		if (trim($title) == "")
+			return '{"status" : "FAILED", "reason" : "Title cannot be empty."}';
+		$refined_title = refine_title($title);
 
 
-		echo " [x] Forwarded to server '$back_queue_get' : $refined_title\n";
+		// create JSON to send
+	    $msg = array(
+	        "title"  => $refined_title,
+	        "body" => $body
+	    );
+
+	    $msg = json_encode($msg);
+
+		echo " [x] Forwarded to server '$back_queue_get' : $msg\n";
 
 		$rpcClient = new RpcClient($file_back);
-		$response = $rpcClient->call($back_queue_get, $refined_title, $func);
+		$response = $rpcClient->call($back_queue_get, $msg, $func);
 
 		return $response;
 
