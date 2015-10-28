@@ -13,6 +13,12 @@
 
 #include "utils.h"
 
+#define APP_GET     "app_GET.php"
+#define APP_GET_FORMATTED "app_get_formatted.php"
+#define APP_GET_RAW "app_get_raw.php"
+#define APP_MODIFY  "app_modify.php"
+#define APP_RENAME  "app_rename.php"
+#define APP_SEARCH  "app_search.php"
 #define BROKERTXT 	"broker.txt"
 #define BROKER2TXT 	"broker2.txt"
 #define MAX 		500
@@ -51,9 +57,10 @@ void setFile(const char *fileName, const char *msg)
     fclose(fd);
 }
 
-void executeScripts(char *phpScript, int numProcesses)
+void executeScripts(int numProcesses, char *phpScript)
 {    
     pid_t child_pid;
+
     char *argv[] = {"/usr/bin/php", phpScript, 0};
     char *envp[] = {0};
     int i = 0;
@@ -84,29 +91,33 @@ void executeScripts(char *phpScript, int numProcesses)
 
 int main(int argc, char **argv)
 {
-	if (argc < 3)
-    {
-		USAGE(argv[0]);
-        return EXIT_FAILURE;
-    }
+	// if (argc < 3)
+ //    {
+	// 	USAGE(argv[0]);
+ //        return EXIT_FAILURE;
+ //    }
 
 	// check if we should set broker ip file(s)
-	if (argc > 3)
-		setFile(BROKERTXT, argv[3]);
-	if (argc > 4)
-		setFile(BROKER2TXT, argv[4]);
+	//if (argc > 3)
+	//	setFile(BROKERTXT, argv[3]);
+	//if (argc > 4)
+	//	setFile(BROKER2TXT, argv[4]);
 
-    char *phpScript = argv[1];
+    //char *phpScript = argv[1];
 
-    int numProcesses = atoi(argv[2]);
+    int numProcesses = atoi(argv[1]);
     if (numProcesses > MAX || numProcesses <= 0)
     {
         USAGE(argv[0]);
         return EXIT_FAILURE;
     }
 
-    executeScripts(phpScript, numProcesses);
+    executeScripts(numProcesses, APP_GET);
+    executeScripts(numProcesses, APP_GET_FORMATTED);
+    executeScripts(numProcesses, APP_GET_RAW);
+    executeScripts(numProcesses, APP_MODIFY);
+    executeScripts(numProcesses, APP_RENAME);
+    executeScripts(numProcesses, APP_SEARCH);
 
     return EXIT_SUCCESS;
 }
-
