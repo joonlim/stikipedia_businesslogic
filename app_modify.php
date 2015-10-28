@@ -16,15 +16,18 @@
 	 * Replace underscores with spaces and uppercase the first letter of every
 	 * word.
 	 */
-	function refine_title($title) {
+	function refine_title($string) {
 
 		// replace underscores with spaces
-		$refined_title = RegExUtilities::replace_underscores($title);
+		$string = preg_replace("(_)", " ", $string);
 
-        // Uppercase first letter of every word in the title.
-        $refined_title = ucwords(strtolower($refined_title));
+		// replace '%20' with space
+		$string = preg_replace("(%20)", " ", $string);
 
-		return $refined_title;
+		// replace multiple spaces with single space
+		$string = preg_replace("([ ]{2,})", " ", $string);
+
+		return ucwords(strtolower($string));
 	}
 
 	/**
