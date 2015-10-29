@@ -2,7 +2,6 @@
 	/**
 	 * Business logic for get raw body request.
 	 */
-	include ("data_manager.php");
 	include ("rpc_client.php");
 	include ("rpc_server.php");
 	
@@ -27,7 +26,7 @@
 		// replace multiple spaces with single space
 		$string = preg_replace("([ ]{2,})", " ", $string);
 
-		return ucwords(strtolower($string));
+		return trim(ucwords(strtolower($string)));
 	}
 
 	/**
@@ -67,6 +66,9 @@
 		if(trim($new_title) == "")
 			return '{"status" : FAILED", "reason" : "New title cannot be empty."}';
 		$new_title = refine_title($new_title);
+
+		if($new_title == $old_title)
+			return '{"status" : FAILED", "reason" : "Titles are the same. No renaming to be done."}';
 
 		// create JSON to send
 	    $msg = array(

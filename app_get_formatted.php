@@ -2,7 +2,6 @@
 	/**
 	 * Business logic for get formatted body request.
 	 */
-	include ("data_manager.php");
 	include ("rpc_client.php");
 	include ("rpc_server.php");
 	
@@ -27,7 +26,7 @@
 		// replace multiple spaces with single space
 		$string = preg_replace("([ ]{2,})", " ", $string);
 
-		return ucwords(strtolower($string));
+		return trim(ucwords(strtolower($string)));
 	}
 
 	function format_body($content) {

@@ -2,7 +2,6 @@
 	/**
 	 * Business logic for get raw body request.
 	 */
-	include ("data_manager.php");
 	include ("rpc_client.php");
 	include ("rpc_server.php");
 	
@@ -27,7 +26,23 @@
 		// replace multiple spaces with single space
 		$string = preg_replace("([ ]{2,})", " ", $string);
 
-		return ucwords(strtolower($string));
+		return trim(ucwords(strtolower($string)));
+	}
+
+	/**
+	 * Replaces the spaces from a string with underscores.
+	 */
+	function replace_spaces($string) {
+
+		return preg_replace("/\s+/", "_", $string);
+	}
+
+	/**
+	 * Replaces the backticks with single quotes.
+	 */
+	function replace_backticks($string) {
+
+		return preg_replace("(`)", "'", $string);
 	}
 
 	/**
@@ -63,11 +78,11 @@
 
 			echo "\n";
 
-			$url_title = RegExUtilities::replace_spaces($article);
+			$url_title = replace_spaces($article);
 			$url_title = refine_title($url_title);
 
 			$content .= "\n";
-			$content .= '<li><a href= "' . RegExUtilities::replace_spaces($url_title) . '" >' . $url_title . '</a></li>';
+			$content .= '<li><a href= "' . 	replace_spaces($url_title) . '" >' . $url_title . '</a></li>';
 		
 		}
 
