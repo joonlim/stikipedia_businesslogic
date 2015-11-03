@@ -8,8 +8,8 @@
 	$file_front = "broker.txt";
 	$file_back = "broker2.txt";
 
-	$front_queue_get = "front_rename"; // routing key
-	$back_queue_get = "back_rename";  // binding key
+	$front_queue_get = "FRONT_RENAME"; // routing key
+	$back_queue_get = "BACK_RENAME";  // binding key
 
 	/**
 	 * Replace underscores with spaces and uppercase the first letter of every
