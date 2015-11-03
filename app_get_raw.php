@@ -8,7 +8,7 @@
 	$file_front = "broker.txt";
 	$file_back = "broker2.txt";
 
-	$front_queue_get = "FRONT_GET_rAW"; // routing key
+	$front_queue_get = "FRONT_GET_RAW"; // routing key
 	$back_queue_get = "BACK_GET";  // binding key
 
 	/**

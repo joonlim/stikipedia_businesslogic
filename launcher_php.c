@@ -13,7 +13,7 @@
 
 #include "utils.h"
 
-#define APP_GET     "app_GET.php"
+#define APP_GET     "app_rest_GET.php"
 #define APP_GET_FORMATTED "app_get_formatted.php"
 #define APP_GET_RAW "app_get_raw.php"
 #define APP_MODIFY  "app_modify.php"
