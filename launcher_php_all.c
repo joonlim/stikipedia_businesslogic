@@ -112,12 +112,12 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
 
-//    executeScripts(numProcesses, APP_GET);
-//    executeScripts(numProcesses, APP_GET_FORMATTED);
-//    executeScripts(numProcesses, APP_GET_RAW);
+    executeScripts(numProcesses, APP_GET);
+    executeScripts(numProcesses, APP_GET_FORMATTED);
+    executeScripts(numProcesses, APP_GET_RAW);
     executeScripts(numProcesses, APP_MODIFY);
-//    executeScripts(numProcesses, APP_RENAME);
-//    executeScripts(numProcesses, APP_SEARCH);
+    executeScripts(numProcesses, APP_RENAME);
+    executeScripts(numProcesses, APP_SEARCH);
 
     return EXIT_SUCCESS;
 }
