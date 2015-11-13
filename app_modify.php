@@ -59,8 +59,8 @@
 
 		$body = $data['body'];
 
-		if (trim($body) == "")
-			return '{"status" : "FAILED", "reason" : "An article\'s body cannot be empty."}';
+		// if (trim($body) == "")
+		// 	return '{"status" : "FAILED", "reason" : "An article\'s body cannot be empty."}';
 
 		$title = $data['title'];
 		if (trim($title) == "")
