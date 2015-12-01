@@ -104,8 +104,8 @@
 	        }
 
 			// close channel and connection
-			$this->channel->close();
-			$this->connection->close();
+			// $this->channel->close();
+			// $this->connection->close();
 
 			// if $func is empty, just return the response from the broker.
 			if (empty($func))

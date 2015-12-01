@@ -13,6 +13,9 @@
 	$front_queue_get = "FRONT_REST_GET"; // routing key
 	$back_queue_get = "BACK_GET";  // binding key
 
+	$rpcServer = new RpcServer($file_front);
+	$rpcClient = new RpcClient($file_back);
+
 	$title;
 
 	/**
@@ -78,14 +81,13 @@
 
 		echo " [x] Forwarded to server in '$back_queue_get' : $refined_title\n";
 
-		$rpcClient = new RpcClient($file_back);
+		// $rpcClient = new RpcClient($file_back);
+		global $rpcClient;
 		$response = $rpcClient->call($back_queue_get, $refined_title, $func);
 
 		return $response;
 
 	}
-
-	$rpcServer = new RpcServer($file_front);
 
 	$rpcServer->start($front_queue_get, 'foward_message');
 

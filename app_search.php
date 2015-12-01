@@ -11,6 +11,9 @@
 	$front_queue_get = "FRONT_SEARCH"; // routing key
 	$back_queue_get = "BACK_SEARCH";  // binding key
 
+	$rpcServer = new RpcServer($file_front);
+	$rpcClient = new RpcClient($file_back);
+
 	/**
 	 * Replace underscores with spaces and uppercase the first letter of every
 	 * word.
@@ -128,14 +131,13 @@
 
 		echo " [x] Forwarded to client in '$back_queue_get' : $msg\n";
 
-		$rpcClient = new RpcClient($file_back);
+		// $rpcClient = new RpcClient($file_back);
+		global $rpcClient;
 		$response = $rpcClient->call($back_queue_get, $msg, $func);
 
 		return $response;
 
 	}
-
-	$rpcServer = new RpcServer($file_front);
 
 	$rpcServer->start($front_queue_get, 'foward_message');
 
