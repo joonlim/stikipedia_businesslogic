@@ -12,7 +12,7 @@
 	$back_queue_get = "BACK_MODIFY";  // binding key
 
 	$rpcServer = new RpcServer($file_front);
-	$rpcClient = new RpcClient($file_back);
+	$rpcClient = new RpcClient($back_queue_get, $file_back);
 
 	/**
 	 * Replace underscores with spaces and uppercase the first letter of every

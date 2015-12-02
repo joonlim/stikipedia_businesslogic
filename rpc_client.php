@@ -54,7 +54,7 @@
 			return $connection;
 		}
 
-	    public function __construct($file = "broker_ip.txt") {
+	    public function __construct($routing_key, $file = "broker_ip.txt") {
 	    	// create a connection to the server
 	        $this->connection = $this->createAMQPStreamConnection($file);
 	        $this->channel = $this->connection->channel();
@@ -62,7 +62,7 @@
 			// declare a queue to send to
 			// this creates the queue if it does not exist
 	        list($this->callback_queue, ,) = $this->channel->queue_declare(
-	            "", false, false, true, false);
+	            $routing_key, false, false, false, false);
 
 	        $this->channel->basic_consume(
 	            $this->callback_queue, '', false, false, false, false,
